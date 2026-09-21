@@ -1,0 +1,5 @@
+#if CONFIG_DEBUG_UART_BASE == 0xff0e0000
+	/* GPIO4_B0/B1: mux 1, two-bit fields at shifts 0 and 2. */
+	rk_clrsetreg(&grf->gpio4b_iomux,
+		     (3 << 0) | (3 << 2), (1 << 0) | (1 << 2));
+#else
