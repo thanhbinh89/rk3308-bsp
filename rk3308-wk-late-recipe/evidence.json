@@ -1,0 +1,25 @@
+{
+  "recipe_version": "1.1",
+  "correction": "Composite SHA-256 in v1 had only 63 hex characters. Corrected from the user's direct sha256sum output after H7b; trailing character is 3. Kernel build did not need to change.",
+  "record_date": "2026-09-23",
+  "kernel_commit": "95ca1f76fe3a33b6c3061f200e9f4be6e47293dd",
+  "kernel_version": "4.4.143",
+  "gcc_reference": "Linaro GCC 6.3.1 20170404",
+  "binutils_reference": "2.27",
+  "sha256": {
+    "drivers/spi/spi-wk2xxx": "edabae700a3439331f996904aec77a3bddefbf49c578d4176a54af494e3f7d4a",
+    "drivers/spi/spi-wk2xxx-late": "7b92411868b99ef71b16853c7fe041881fec061a1f217e5836efbe6c30fce29f",
+    "drivers/spi/spi-wk2xxx.o": "8d9262d5c51603cc4c0bca2c1f90d889b540bfd0eb697ff38de4c9183598f0f3",
+    "vmlinux": "7ffe906490388c65f99388c9ad9610457d7addc891b4e9e6150b68362ebfe3c5",
+    "arch/arm64/boot/Image": "d8a7551c14f1c47847c79bd71304a7d35f68a6e340734585febf90498aeb7679"
+  },
+  "image_bytes": 12718088,
+  "image_crc32": "d8b97ae7",
+  "reference_symbols": {
+    "__initcall7_start": "0xffffff8008bc2490",
+    "__initcall_wk2xxx_init6": "0xffffff8008bc2518",
+    "__initcall_end": "0xffffff8008bc2588"
+  },
+  "source_of_reference": "User-provided audit v39 plus H1-H7a logs in this conversation",
+  "caveat": "Individual hashes are recorded board-test references, not a promise of bit-for-bit kernel reproducibility. No vendor binary included."
+}
