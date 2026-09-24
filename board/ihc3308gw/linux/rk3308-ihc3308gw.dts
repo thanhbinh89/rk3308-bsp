@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/dts-v1/;
+
+#include "rk3308.dtsi"
+
+/ {
+	model = "Firefly IHC-3308GW (EPCB Lab4)";
+	compatible = "firefly,ihc-3308gw", "rockchip,rk3308";
+
+	aliases {
+		serial4 = &uart4;
+	};
+
+	chosen {
+		stdout-path = "serial4:1500000n8";
+	};
+
+	memory@200000 {
+		device_type = "memory";
+		/* Match the DRAM bank reported by the validated U-Boot. */
+		reg = <0x0 0x00200000 0x0 0x1fe00000>;
+	};
+};
+
+&uart4 {
+	pinctrl-0 = <&uart4_xfer>;
+	status = "okay";
+};
+
+&emmc {
+    bus-width = <8>;
+    cap-mmc-highspeed;
+    non-removable;
+    max-frequency = <25000000>;
+    status = "okay";
+};

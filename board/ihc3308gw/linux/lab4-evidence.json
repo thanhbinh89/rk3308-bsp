@@ -1,0 +1,112 @@
+{
+  "record_version": 1,
+  "board": "Firefly IHC-3308GW",
+  "soc": "RK3308B",
+  "scope": "Minimal upstream kernel bring-up; guided lab validation, not distro qualification",
+  "provenance": {
+    "source": "User-supplied command output and confirmation; no direct assistant access to server/board",
+    "raw_K19_output_received": false,
+    "raw_K18_uboot_transfer_crc_output_received": false
+  },
+  "source_commit": "e2acc2211022246c77740d5df08265cc27eedcc5",
+  "kernel_release": "6.12.111-epcb-ihc3308gw-lab4",
+  "builder_image": "sha256:c77af91629b6c50b9abe5335c68355a26a9db8ba06138d0d87d648d1280960b7",
+  "toolchain": {
+    "prefix": "/work/out/docker-ihc3308/host/bin/aarch64-buildroot-linux-musl-",
+    "gcc": "13.4.0",
+    "binutils": "2.43.1",
+    "provider": "Buildroot 2025.02.18; pre-existing toolchain used by kernel recipe"
+  },
+  "recipe_container_sha256": "4c6b7799a459d919c8ce0210663f9dc19a88d076a8250aeed97f36f5a0728717",
+  "build": {
+    "checkpoint": "K16",
+    "status": "PASS",
+    "rc": 0,
+    "output": "out/kernel-6.12.111-replay-3",
+    "jobs": 20,
+    "source_method": "git archive pinned commit plus reviewed board DTS/Makefile registration",
+    "markers": [
+      "CONFIG_REPLAY_PASS",
+      "KERNEL_RELEASE_PASS",
+      "DTB_BASELINE_PASS",
+      "IMAGE_LAYOUT_PASS",
+      "EMBEDDED_CONFIG_PASS",
+      "BUILD_CHECK_PASS",
+      "ARTIFACT_CHECK_PASS"
+    ],
+    "original_manifest_runtime_test": "pending: this manifest records build checks only",
+    "image_header": {
+      "text_offset": "0x0",
+      "image_size": "0x2530000",
+      "reserved_end_exclusive": "0x4530000"
+    }
+  },
+  "payloads": [
+    {
+      "file": "Image",
+      "load_address": "0x02000000",
+      "bytes": 38124032,
+      "bytes_hex": "0x245ba00",
+      "sha256": "3bac04394e6cd0eef88b0c26865203d1bfc14231e7f2476f5bae55190b1b2284",
+      "crc32_reference": "e92b1cac"
+    },
+    {
+      "file": "ihc3308gw-emmc25.dtb",
+      "load_address": "0x08000000",
+      "bytes": 30984,
+      "bytes_hex": "0x7908",
+      "sha256": "aa0ee43c8184ae500763d3b345fb0b48b2d2ce720a5d77f44ac78b1217338a8f",
+      "crc32_reference": "74da2f63"
+    },
+    {
+      "file": "rootfs.cpio.gz",
+      "load_address": "0x09000000",
+      "bytes": 957091,
+      "bytes_hex": "0xe9aa3",
+      "sha256": "7eb45684d0a3f879f92742950abdd6adf6c6dcbe54ba07d266a1d4c027b817c7",
+      "crc32_reference": "c7440387",
+      "source": "/srv/tftp/rk3308/lab4-6.12.111/rootfs.cpio.gz"
+    }
+  ],
+  "staging": {
+    "checkpoint": "K17",
+    "status": "PASS",
+    "rc": 0,
+    "directory": "/srv/tftp/rk3308/lab4-6.12.111-replay-3",
+    "checks": "All three SHA-256 and byte counts matched in supplied output"
+  },
+  "runtime": {
+    "K18": {
+      "status": "Boot-to-shell release/cmdline observed",
+      "uname_r": "6.12.111-epcb-ihc3308gw-lab4",
+      "cmdline": "earlycon=uart8250,mmio32,0xff0e0000 console=ttyS4,1500000n8 rdinit=/init cpuidle.off=1 epcb_lab=linux612_replay ignore_loglevel initcall_debug panic=0",
+      "uboot_transfer_crc_status": "Evidence not supplied; reference values are not recorded measurements"
+    },
+    "K19": {
+      "status": "PASS by user confirmation; raw output not supplied",
+      "pid1": "init",
+      "root_mount_filesystem": "rootfs in RAM",
+      "cpu_online": "0-3",
+      "system_ram_inclusive": "00200000-1fffffff",
+      "emmc_read": {
+        "source": "/dev/mmcblk0",
+        "offset_bytes": 0,
+        "iflag": "direct",
+        "destination": "/emmc-k19.bin in RAM",
+        "rc": 0,
+        "bytes": 16777216,
+        "sha256": "876fe5f72a64686aeff24d32a36d3c6ec8612d6641b3d6269e24493f58ac8053",
+        "comparison": "Matches K13 current-eMMC content reference; not the pre-U-Boot-change backup"
+      }
+    }
+  },
+  "limits": [
+    "Full boot log not established error-free",
+    "No stress or whole-device eMMC test",
+    "No HS200 or eMMC write/rootfs replacement validation",
+    "No bit-for-bit repeat-build validation",
+    "DDR init and BL31 remain vendor dependencies",
+    "CPU_FREQ disabled; CPU_IDLE=y with cpuidle.off=1",
+    "Peripheral porting and full distro release remain future work"
+  ]
+}
