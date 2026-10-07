@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/dts-v1/;
+
+#include "rk3308.dtsi"
+
+/ {
+        model = "Firefly IHC-3308GW (EPCB Lab5 Ethernet)";
+        compatible = "firefly,ihc-3308gw", "rockchip,rk3308";
+
+        aliases {
+                serial4 = &uart4;
+        };
+
+        chosen {
+                stdout-path = "serial4:1500000n8";
+        };
+
+        memory@200000 {
+                device_type = "memory";
+                /* Match the DRAM bank reported by the validated U-Boot. */
+                reg = <0x0 0x00200000 0x0 0x1fe00000>;
+        };
+
+        /* Match the vendor declaration; voltage/control wiring is unverified. */
+        vcc_phy: vcc-phy-regulator {
+                compatible = "regulator-fixed";
+                regulator-name = "vcc_phy";
+                regulator-always-on;
+                regulator-boot-on;
+        };
+};
+
+&uart4 {
+        pinctrl-0 = <&uart4_xfer>;
+        status = "okay";
+};
+
+&emmc {
+    bus-width = <8>;
+    cap-mmc-highspeed;
+    non-removable;
+    max-frequency = <25000000>;
+    status = "okay";
+};
+
+&gmac {
+        phy-mode = "rmii";
+        clock_in_out = "input";
+        assigned-clocks = <&cru SCLK_MAC>;
+        assigned-clock-parents = <&mac_clkin>;
+        pinctrl-names = "default";
+        pinctrl-0 = <&rmiim1_pins &macm1_refclk_12ma>;
+        phy-supply = <&vcc_phy>;
+        status = "okay";
+};
